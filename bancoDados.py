@@ -45,15 +45,7 @@ def openConn():
     return conn,cursor
 
 def insereContato(contato):
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="agenda"
-        )
-
-    cursor =  conn.cursor()
-
+    conn,cursor = openConn()
     lista = [contato.nome,contato.email,contato.telefone]
     
     if contato.idContato:
@@ -61,13 +53,13 @@ def insereContato(contato):
         ,(contato.nome,contato.telefone,contato.idContato))
 
     else:
+        cursor.execute("ALTER TABLE contatos AUTO_INCREMENT = 1")
         cursor.execute("""INSERT INTO contatos(nome,email,telefone) VALUES(%s,%s,%s)""",lista)
     
     conn.commit()
-    #print("Dados salvos com sucesso.")
     conn.close()
 
-def procuraContato():
+def listaContatos():
     conn,cursor = openConn()
     contatos = []
     cursor.execute("SELECT id,nome,email,telefone FROM contatos")
@@ -109,3 +101,16 @@ def procuraTelefone(telefone):
     conn.close()
     return contatos
 
+def excluiContato(email):
+    conn,cursor = openConn()
+    cursor.execute("DELETE FROM contatos WHERE email=(%s)",(email,))
+    conn.commit()
+    conn.close()
+
+def updateContato(contato):
+    lista = [contato.nome,contato.telefone,contato.email]
+    conn,cursor = openConn()
+    cursor.execute("UPDATE contatos SET nome =(%s),telefone = (%s) WHERE email = (%s)"
+    ,(contato.nome,contato.telefone,contato.email))
+    conn.commit()
+    conn.close()

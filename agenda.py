@@ -2,7 +2,6 @@ from contato import *
 from bancoDados import * 
 from prettytable import PrettyTable
 
-listaContatos = []
 
 def novoContato():
     nome     = input('Digite um nome para o contato: ')
@@ -18,7 +17,7 @@ def tabelaModelo():
 
 def imprimeContatos():
     tabela = tabelaModelo()
-    for contato in procuraContato():
+    for contato in listaContatos():
         tabela.add_row([contato.nome,contato.email,contato.telefone])
     print(tabela)
 
@@ -61,21 +60,23 @@ def buscaTelefone(telefone):
         print(f'Nenhum contato encontrado com o telefone: "{telefone}"')
 
 def alteraContato(email):
-    contato = buscaEmail(email)
+    contato = procuraEmail(email)
     if not contato:
         print(f'Não existe nenhum contato cadastrado com o email "{email}"')
-        return
-    nome     = input('Digite um novo nome para o contato: ')
-    telefone = input('Digite um novo telefone para o contato: ') 
-    contato.nome,contato.telefone = nome,telefone
+    else:    
+        nome     = input('Digite um novo nome para o contato: ')
+        telefone = input('Digite um novo telefone para o contato: ') 
+        contato.nome,contato.telefone = nome,telefone
+        updateContato(contato)
+        print('Contato alterado com sucesso!')
 
 def deletaContato(email):
-    contato = buscaEmail(email)
-    if not contato:
-        print(f'Não existe nenhum contato cadastrado com o email "{email}"')
-        return
-
-    listaContatos.remove(contato)
+    if procuraEmail(email):
+        excluiContato(email)
+        print('Contato removido com sucesso!')   
+    else:
+        print(f'Nenhum contato encontrado com o email: "{email}"') 
+   
 
 
 #novoContato()
@@ -87,3 +88,5 @@ def deletaContato(email):
 #buscaNome('Joseee')
 #buscaEmail('jose@email.cm')
 #buscaTelefone('11 1111-1111')
+#deletaContato('jose@email.com')
+#alteraContato('maria@email.com')
