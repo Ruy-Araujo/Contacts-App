@@ -1,4 +1,5 @@
-from contato import Contato
+from contato import *
+from bancoDados import * 
 from prettytable import PrettyTable
 
 listaContatos = []
@@ -8,24 +9,23 @@ def novoContato():
     email    = input('Digite um email para o contato: ')
     telefone = input('Digite um telefone para o contato: ')
     email = validaEmail(email)   
-    listaContatos.append(Contato(nome,email,telefone))
-    imprimeLista()
+    insereContato(Contato(nome,email,telefone))
+    print('Contato adicionado com sucesso!')
 
 def tabelaModelo():
     tabela = PrettyTable(['Nome','Email','Telefone'])
     return tabela
 
-def imprimeLista():
+def imprimeContatos():
     tabela = tabelaModelo()
-    for contato in listaContatos:
+    for contato in procuraContato():
         tabela.add_row([contato.nome,contato.email,contato.telefone])
     print(tabela)
 
 def validaEmail(email):
     valido = False
     while not valido:
-        resultado = buscaEmail(email)
-        if resultado:
+        if procuraEmail(email):
             print(f'O email "{email}" já está cadastrado')
             email = input('Digite outro email: ')
         else:
@@ -33,26 +33,32 @@ def validaEmail(email):
     return email
 
 def buscaNome(nome):
-    resultado = ([contato for contato in listaContatos if contato.nome == nome])
-    #tablea = PrettyTable(['Nome','Email','Telefone'])
     tabela = tabelaModelo()
-    
-    for contato in resultado:
-        tabela.add_row([contato.nome,contato.email,contato.telefone])
-    print(tabela)
+    if procuraNome(nome):
+        for contato in procuraNome(nome):
+            tabela.add_row([contato.nome,contato.email,contato.telefone])
+        print(tabela)
+    else:
+        print(f'Nenhum contato encontrado com o nome: "{nome}"')
 
 def buscaEmail(email):
-    resultado = ([contato for contato in listaContatos if contato.email == email])
-    if not resultado:
-        return False
-    return resultado[0]
+    resultado = procuraEmail(email)
+    tabela = tabelaModelo()
+    if resultado:
+        for linha in resultado:
+            tabela.add_row([contato.nome,contato.email,contato.telefone])
+        print(tabela)
+    else:
+        print(f'Nenhum contato encontrado com o email: "{email}"')
 
 def buscaTelefone(telefone):
-    resultado = ([contato for contato in listaContatos if contato.telefone == telefone])
     tabela = tabelaModelo()
-    for contato in resultado:
-        tabela.add_row([contato.nome,contato.email,contato.telefone])
-    print(tabela)
+    if procuraTelefone(telefone):
+        for contato in procuraTelefone(telefone):
+            tabela.add_row([contato.nome,contato.email,contato.telefone])
+        print(tabela)
+    else:
+        print(f'Nenhum contato encontrado com o telefone: "{telefone}"')
 
 def alteraContato(email):
     contato = buscaEmail(email)
@@ -71,11 +77,13 @@ def deletaContato(email):
 
     listaContatos.remove(contato)
 
-"""
-novoContato()
-novoContato()
-novoContato()
-alteraContato('m@m')
-deletaContato('a@a')
-imprimeLista()
-"""
+
+#novoContato()
+#novoContato()
+#novoContato()
+#alteraContato('m@m')
+#deletaContato('a@a')
+#imprimeContatos()
+#buscaNome('Joseee')
+#buscaEmail('jose@email.cm')
+#buscaTelefone('11 1111-1111')

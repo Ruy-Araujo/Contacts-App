@@ -1,5 +1,6 @@
 import mysql.connector
-   
+from contato import *
+
 def criaDB():
     conn = mysql.connector.connect(
         host="localhost",
@@ -32,7 +33,18 @@ def criaTable():
     conn.close()
     print('A tabela contatos foi criado com sucesso!')
 
-def insereContato():
+def openConn():
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="agenda"
+        )
+    cursor =  conn.cursor()
+
+    return conn,cursor
+
+def insereContato(contato):
     conn = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -42,102 +54,57 @@ def insereContato():
 
     cursor =  conn.cursor()
 
-    lista = [(contato.nome,contato.email,contato.telefone)]
+    lista = [contato.nome,contato.email,contato.telefone]
     
-    if contato.id_contato:
-        cursor.excute("""
-        UPDATE contatos 
-        SET nome = ?, telefone = ?
-        WHERE id = ?
-        """,(contato.nome,contato.telefone,contato.id_contato))
+    if contato.idContato:
+        cursor.excute("""UPDATE contatos SET nome = %s, telefone = %s WHERE id = %s"""
+        ,(contato.nome,contato.telefone,contato.idContato))
 
     else:
-        cursor.execute("""
-        INSERT INTO contatos(nome,email,telefone) 
-        VALUES(?,?,?)""",lista)
+        cursor.execute("""INSERT INTO contatos(nome,email,telefone) VALUES(%s,%s,%s)""",lista)
     
     conn.commit()
-    print("Dados salvos com sucesso.")
+    #print("Dados salvos com sucesso.")
     conn.close()
 
 def procuraContato():
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="agenda"
-        )
-
-    cursor =  conn.cursor()
-
+    conn,cursor = openConn()
     contatos = []
-
-    cursor.execute(SELECT id,nome,email,telefone FROM contatos)
-
-    for linha in cursor.fetchall():
-        contatos.append(Contato(id_contato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
+    cursor.execute("SELECT id,nome,email,telefone FROM contatos")
     
+    for linha in cursor.fetchall():
+        contatos.append(Contato(idContato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
     conn.close()
     return contatos
 
 def procuraNome(nome):
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="agenda"
-        )
-
-    cursor =  conn.cursor()
-
+    conn,cursor = openConn()
     contatos = []
-
-    cursor.execute(SELECT id,nome,email,telefone FROM contatos WHERE nome=?,[nome])
+    cursor.execute("SELECT * FROM contatos WHERE nome=(%s)",(nome,))
 
     for linha in cursor.fetchall():
-        contatos.append(Contato(id_contato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
+        print(linha)
+        contatos.append(Contato(idContato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
     
     conn.close()
     return contatos
 
 def procuraEmail(email):
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="agenda"
-        )
-
-    cursor =  conn.cursor()
-
-    contatos = []
-
-    cursor.execute(SELECT id,nome,email,telefone FROM contatos WHERE email=?,[email])
-
     contato = None
-
+    conn,cursor = openConn()
+    cursor.execute("SELECT * FROM contatos WHERE email=(%s)",(email,))
     for linha in cursor.fetchall():
-        contato = contatos.append(Contato(id_contato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
-
+        contato = Contato(idContato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3])
     conn.close()
     return contato
 
 def procuraTelefone(telefone):
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="agenda"
-        )
-
-    cursor =  conn.cursor()
-
+    conn,cursor = openConn()
     contatos = []
-
-    cursor.execute(SELECT id,nome,email,telefone FROM contatos WHERE telefone=?,[telefone])
-
+    cursor.execute("SELECT * FROM contatos WHERE telefone=(%s)",(telefone,))
+    
     for linha in cursor.fetchall():
-        contatos.append(Contato(id_contato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
+        contatos.append(Contato(idContato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
     
     conn.close()
     return contatos
