@@ -1,6 +1,8 @@
 from contato import *
 from bancoDados import * 
 from prettytable import PrettyTable
+import json
+import requests as r
 
 
 def novoContato():
@@ -77,16 +79,21 @@ def deletaContato(email):
     else:
         print(f'Nenhum contato encontrado com o email: "{email}"') 
    
-
-
-#novoContato()
-#novoContato()
-#novoContato()
-#alteraContato('m@m')
-#deletaContato('a@a')
-#imprimeContatos()
-#buscaNome('Joseee')
-#buscaEmail('jose@email.cm')
-#buscaTelefone('11 1111-1111')
-#deletaContato('jose@email.com')
-#alteraContato('maria@email.com')
+def requestContato():
+    response = r.get("https://randomuser.me/api/?nat=br&inc=name,phone,email&noinfo")
+    if response.status_code != 200:
+        print('Erro ao consumir o serviço de API!',response.status_code)
+        return
+    else:
+        resultado = response.json()
+        contato = Contato(nome = '{} {}'.format(resultado['results'][0]['name']['first'],resultado['results'][0]['name']['last']),
+        email = resultado['results'][0]['email'],
+        telefone = resultado['results'][0]['phone'])
+        return contato
+        
+def adicionaRandon():
+    contato = requestContato()    
+    while procuraEmail(contato.email):
+        contato = requestContato()
+    insereContato(contato)
+    print('Contato adicionado com sucesso!')    
