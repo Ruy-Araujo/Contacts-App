@@ -5,13 +5,10 @@ import json
 import requests as r
 
 
-def novoContato():
-    nome     = input('Digite um nome para o contato: ')
-    email    = input('Digite um email para o contato: ')
-    telefone = input('Digite um telefone para o contato: ')
+def novoContato(nome,email,telefone):
     email = validaEmail(email)   
     insereContato(Contato(nome,email,telefone))
-    print('Contato adicionado com sucesso!')
+    print('\nContato adicionado com sucesso!')
 
 def tabelaModelo():
     tabela = PrettyTable(['Nome','Email','Telefone'])
@@ -96,4 +93,3 @@ def adicionaRandon():
         contato = requestContato()
     insereContato(contato)
     print('Contato adicionado com sucesso!')    
-

@@ -1,6 +1,6 @@
 from agenda import *
-import sys
-import os
+import sys,os,time
+
 
 def limpaTela():
     if sys.platform.startswith('linux'):
@@ -8,6 +8,9 @@ def limpaTela():
 
     elif sys.platform.startswith('win32'):
         os.system('cls')
+
+def espera(segundos):
+    time.sleep(segundos)
 
 def saudacao():
     print('Olá seja bem vindo a agenda de contatos v1.0!\n')
@@ -19,7 +22,8 @@ def menuPrincipal():
         "Adicionar um novo contato manualmente",
         "Adicionar um novo contato automaticamente",
         "Alterar um contato existente",
-        "Remover um contato existente"
+        "Remover um contato existente",
+        "Sair"
     ]
     print("Escolha a opção desejada:\n")
     for index,opcao in enumerate(opcoes,start=1):
@@ -41,35 +45,84 @@ def menuProcuraContato():
     return "\n"
 
 def main():
-    limpaTela()
-    saudacao()
-    opcao = input(menuPrincipal())
-
-    if opcao == "1":
-        imprimeContatos()
-
-    elif opcao == "2":
+    valido = False
+    #saudacao()
+    while not valido:
         limpaTela()
-        busca = input(menuProcuraContato())
+        opcao = input(menuPrincipal())
+
+    # Lista Contatos
+        if opcao == "1":
+            limpaTela()
+            imprimeContatos()
+            espera(5)
         
-        if busca == "1":
-            nome = input('\nDigite o nome desejado:\n')
+    # Busca Contato
+        elif opcao == "2":
             limpaTela()
-            print("Nome buscado: ",nome)
-            buscaNome(nome)
+            busca = input(menuProcuraContato())
+            
+            if busca == "1":
+                nome = input('\nDigite o nome desejado:\n')
+                limpaTela()
+                print("Nome buscado: ",nome)
+                buscaNome(nome)
+                espera(5)
 
-        elif busca == "2":
-            email = input('\nDigite o email desejado:\n')
+            elif busca == "2":
+                email = input('\nDigite o email desejado:\n')
+                limpaTela()
+                print("Email buscado: ",email)
+                buscaEmail(email)
+                espera (5)
+
+            elif busca == "3":
+                telefone = input('\nDigite o telefone desejado:\n')
+                limpaTela()
+                print("Tefone buscado: ",telefone)
+                buscaTelefone(telefone)
+                espera(5)
+
+    # Adicionar Contato Manualmente
+        elif opcao == "3":
             limpaTela()
-            print("Email buscado: ",email)
-            buscaEmail(email)
+            print('Adicionar novo contato\n')
+            nome     = input("Digite o nome do contato: ")
+            email    = input("Digite o email do contato: ")
+            telefone = input("Digite o telefone do contato: ")
+            novoContato(nome,email,telefone)
+            espera(5)
 
-        elif busca == "3":
-            telefone = input('\nDigite o telefone desejado:\n')
+    # Adicionar Contato Automaticamente
+        elif opcao == "4":
             limpaTela()
-            print("Tefone buscado: ",telefone)
-            buscaTelefone(telefone)
+            adicionaRandon()
+            espera(5)
 
+    # Alterar Contato
+        elif opcao == "5":
+            limpaTela()
+            print("Alterar informações do contato\n")
+            email = input("Digite o email do contato: ")
+            alteraContato(email)
+            espera(5)
+
+    # Remover Contato
+        elif opcao == "6":
+            limpaTela()
+            print("Remover informações do contato\n")
+            email = input("Digite o email do contato: ")
+            deletaContato(email)
+            espera(5)
+
+    # Sair
+        elif opcao == "7":
+            valido = True
+            limpaTela()
+            print('Até a proxima!')
+            espera(5)
+            
+    os.system("exit")
 
 main()
 
