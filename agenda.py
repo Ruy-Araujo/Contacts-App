@@ -43,11 +43,10 @@ def buscaNome(nome):
         print(f'Nenhum contato encontrado com o nome: "{nome}"')
 
 def buscaEmail(email):
-    resultado = procuraEmail(email)
     tabela = tabelaModelo()
-    if resultado:
-        for linha in resultado:
-            tabela.add_row([contato.nome,contato.email,contato.telefone])
+    contato = procuraEmail(email)
+    if procuraEmail(email):
+        tabela.add_row([contato.nome,contato.email,contato.telefone])
         print(tabela)
     else:
         print(f'Nenhum contato encontrado com o email: "{email}"')
@@ -97,3 +96,4 @@ def adicionaRandon():
         contato = requestContato()
     insereContato(contato)
     print('Contato adicionado com sucesso!')    
+

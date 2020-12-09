@@ -75,7 +75,6 @@ def procuraNome(nome):
     cursor.execute("SELECT * FROM contatos WHERE nome=(%s)",(nome,))
 
     for linha in cursor.fetchall():
-        print(linha)
         contatos.append(Contato(idContato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3]))
     
     conn.close()
@@ -86,7 +85,7 @@ def procuraEmail(email):
     conn,cursor = openConn()
     cursor.execute("SELECT * FROM contatos WHERE email=(%s)",(email,))
     for linha in cursor.fetchall():
-        contato = Contato(idContato=linha[0],nome=linha[1],email=linha[2],telefone=linha[3])
+        contato = Contato(nome=linha[1],email=linha[2],telefone=linha[3])
     conn.close()
     return contato
 
