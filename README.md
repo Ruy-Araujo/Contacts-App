@@ -66,10 +66,11 @@ Rode o arquivo menu.py e utilize as funções disponiveis.
 
 ## 🛠️ Construído com
 
-* [MySQL](https://www.mysql.com/) - Banco de Dados
-* [Prettytable](https://pypi.org/project/prettytable/) - Usado para formatar as tabelas
-* [Requests](https://pypi.org/project/requests/) - Usada para solicitar os contos
-* [RandomUser](https://randomuser.me/) - API geradora de contatos
+* [MySQL](https://www.mysql.com/) - Banco de Dados.
+* [Prettytable](https://pypi.org/project/prettytable/) - Utilizado para formatar as apresentações dos contatos.
+* [Requests](https://pypi.org/project/requests/) - Utilizado para integrar o web service ao codigo.
+* [RandomUser](https://randomuser.me/) - API geradora de contatos.
+
 ## ✒️ Autores
 
 * **Ruy Araujo** - *Projeto Inicial* - [github](https://github.com/Ruy-Araujo)
