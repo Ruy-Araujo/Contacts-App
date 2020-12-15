@@ -2,6 +2,8 @@
 
 Uma agenda de contatos desenvolvida em python com o intuito de fixar os conhecimentos em OOP, gerenciamento de ambientes, banco de dados(MySQL) e web services.
 
+![](defaut.gif)
+
 ## 🚀 Começando
 
 Essas instruções permitirão que você obtenha uma cópia do projeto para fins de desenvolvimento e teste.
