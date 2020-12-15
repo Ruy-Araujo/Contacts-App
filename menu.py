@@ -91,13 +91,13 @@ def main():
             email    = input("Digite o email do contato: ")
             telefone = input("Digite o telefone do contato: ")
             novoContato(nome,email,telefone)
-            espera(5)
+            espera(3)
 
     # Adicionar Contato Automaticamente
         elif opcao == "4":
             limpaTela()
             adicionaRandon()
-            espera(5)
+            espera(3)
 
     # Alterar Contato
         elif opcao == "5":
@@ -105,7 +105,7 @@ def main():
             print("Alterar informações do contato\n")
             email = input("Digite o email do contato: ")
             alteraContato(email)
-            espera(5)
+            espera(3)
 
     # Remover Contato
         elif opcao == "6":
@@ -113,14 +113,14 @@ def main():
             print("Remover informações do contato\n")
             email = input("Digite o email do contato: ")
             deletaContato(email)
-            espera(5)
+            espera(3)
 
     # Sair
         elif opcao == "7":
             valido = True
             limpaTela()
             print('Até a proxima!')
-            espera(5)
+            espera(3)
             
     os.system("exit")
 
