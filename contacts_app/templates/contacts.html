@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}My Contacts{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+  <br>
+  <h3 class="text-center">My Contacts</h3>
+
+  <!-- Tables  -->
+  <table class="table table-hover table-dark">
+    <thead>
+        <tr>
+            <!-- Your Columns HERE -->
+            <th class="col-2" scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th style="width:15%" scope="col"></th>
+          </tr>
+    </thead>
+    <tbody>
+        {% for contact in contact_list %}
+        <tr>
+          <td>{{contact.name}}</td>
+          <td>{{contact.email}}</td>
+          <td>{{contact.phone}}</td>
+          <td>
+            <!-- Buttons -->
+            <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#modal{{ loop.length+loop.index }}">Delete</button>
+            <button type="button" class="btn btn-info float-right mx-2" data-toggle="modal" data-target="#modal{{ loop.index }}">Edit</button>
+          </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  {% for contact in contact_list %}
+  <div class="modal fade" id="modal{{ loop.index }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Contact</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" style="color:#fff;">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ url_for('edit_contact', contact_id=contact.id) }}" method="POST" style="color: white">
+            {{ form.hidden_tag() }} 
+
+            {{ form.name.label() }}
+            {{ form.name(class="form-control", value=contact.name) }} 
+            <br>
+            {{ form.email.label() }} 
+            {{ form.email(class="form-control", value=contact.email) }} 
+            <br>
+            {{ form.phone.label() }} 
+            {{ form.phone(class="form-control", value=contact.phone) }}
+            <br>
+            
+            <div>
+              {{ form.edit(class="btn float-right btn-success") }}
+              <button type="button" class="btn float-right btn-secondary mx-2" data-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete modal-->
+  <div class="modal fade" id="modal{{ loop.length+loop.index }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Delete Contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:#fff;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Are you sure to delete <strong>{{ contact.name }}</strong> contact?</h6>
+        <br>
+        <form action="{{ url_for('delete_contact', contact_id=contact.id) }}" method="post">
+          <div>
+            {{ form.delete(class="btn float-right btn-danger") }}
+            <button type="button" class="btn float-right btn-secondary mx-2" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>  
+    </div>    
+  </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}
+
+
+

@@ -1,84 +1,105 @@
-# Agenda de Contatos
+<h1 align="center">MyContacts App</h1>
 
-Uma agenda de contatos desenvolvida em python com o intuito de fixar os conhecimentos em OOP, gerenciamento de ambientes, banco de dados(MySQL) e web services.
+<p align="center">An app made in flask to store and manage contacts.</p>
 
-![](defaut.gif)
 
-## 🚀 Começando
+   * [About](#about)
+   * [Features](#features)
+   * [Getting Started](#getting-started)
+      * [Prerequisites](#prerequisites)
+      * [Install and Run](#install-and-run)
+   * [Technologies](#Technologies)
+   * [Autor](#autor)
+   * [License](#license)
 
-Essas instruções permitirão que você obtenha uma cópia do projeto para fins de desenvolvimento e teste.
 
-### 📋 Pré-requisitos
+## About
+This is a project created to apply my studies acquired during the semester.
 
-Programas necessarios:
+It's an application developed in Python designed to store and manage contacts of multiple users.
 
+
+
+## Features
+
+- [x] User registration
+- [x] Contact registration
+- [x] Contact management
+- [ ] Import/Export contacts
+- [ ] Search contact
+
+You can see a demo in the link below:
+
+- link
+
+## 🚀 Getting Started
+
+These instructions will allow you to obtain a copy of the project on your local machine for development and testing purposes.
+
+### 📋 Prerequisites
+
+You need to have Python3.6+ installed on your machine
+
+### 🔧 Install and Run
+
+Clone the project
+```sh
+$ git clone
 ```
-Python 3.9
-MySQL 8.0.22
+
+Install the dependencies
+```sh
+$ cd contacts_app
+$ pip install -r requirements.txt
 ```
 
-Bibliotecas necessarias: 
-
-```
-prettytable 2.0.0
-requests 2.25.0
-mysql-connector-python 8.0.22
-```
-
-### 🔧 Instalação
-
-Como instalar e configurar o projeto.
-
-Baixe e instale as bibliotecas necessarias através do PIP:
-
-```
-pip install prettytable
-pip install requests 
-pip install mysql-connector-python
+generate a secret key
+```sh
+$ python3
+$ import os
+$ os.urandom(12).hex
 ```
 
-Instale o MySQL:
-
-```
-sudo apt install mysql
-```
-Crie ou altere o usario root da seguinte forma:
-```
-user = root
-password = 
+Insert the secret key into __init__.py
+```py
+app.config['SECRET_KEY'] = '->HERE<-'
 ```
 
-Crie um banco no MySQL chamado "agenda":
-
+If you want, create a sqlite database with some examples using the db_init()
+```sh
+$ python3
+$ from run_app import db_init
+$ db_init()
 ```
-CREATE DATABASE agenda
+
+Run the flask app 
+```sh
+$ python3 run_app.py
 ```
-Crie as tabelas do banco "agenda":
 
-```
-CREATE TABLE contatos(
-        id TINYINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        telefone VARCHAR(255)
-```
-Rode o arquivo menu.py e utilize as funções disponiveis.
+The application should be up and running at [http://localhost:5000](http://localhost:5000)
 
-## 🛠️ Construído com
+## 🛠️ Technologies
 
-* [MySQL](https://www.mysql.com/) - Banco de Dados.
-* [Prettytable](https://pypi.org/project/prettytable/) - Utilizado para formatar as apresentações dos contatos.
-* [Requests](https://pypi.org/project/requests/) - Utilizado para integrar o web service ao codigo.
-* [RandomUser](https://randomuser.me/) - API geradora de contatos.
+* [SQLite](https://www.sqlite.org/)
+* [Flask](https://flask.palletsprojects.com/)
+* [SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/)
+* [WTForms](https://flask-wtf.readthedocs.io/)
+* [Bcrypt](https://flask-bcrypt.readthedocs.io/)
 
-## ✒️ Autores
+## Autor
 
-* **Ruy Araujo** - *Projeto Inicial* - [github](https://github.com/Ruy-Araujo)
+<a href="https://github.com/Ruy-Araujo">
+ <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/53796141?v=4" width="100px;" alt=""/>
+ <br />
+ <sub><b>Ruy Araujo</b></sub></a> 
 
-Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
+[<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/>](https://www.linkedin.com/in/ruy-araujo)
+[<img src="https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white" width="90"/>](https://medium.com/@ruy.araujo)
 
-## 📄 Licença
 
-Este projeto está sob a licença (MIT) - veja o arquivo [LICENSE.md](https://github.com/usuario/projeto/licenca) para detalhes.
+## 📄 License
+
+This project is under MIT-license - see file [LICENSE.md](https://github.com/usuario/projeto/licenca) for details.
 
 
