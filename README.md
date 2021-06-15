@@ -18,6 +18,7 @@ This is a project created to apply my studies acquired during the semester.
 
 It's an application developed in Python designed to store and manage contacts of multiple users.
 
+![exemple](resources/demo.gif)
 
 
 ## Features
